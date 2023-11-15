@@ -1,7 +1,6 @@
 package UI;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -28,8 +27,10 @@ public class CalculatorGUI extends Application {
 		// Create the display
 		display = new TextField();
 		display.setEditable(false);
-		display.setStyle("-fx-control-inner-background: beige;");
-		display.setMinHeight(50);
+		display.getStyleClass().add("display-box");
+//		display.setMinHeight(50);
+		display.setPrefHeight(50);
+		display.setPrefWidth(Double.MAX_VALUE);
 
 		// Create number buttons
 		Button[] numberButtons = new Button[10];
@@ -41,25 +42,30 @@ public class CalculatorGUI extends Application {
 		}
 
 		// Create operator buttons
-		Button btnAdd = createOperatorButton("+", "-fx-background-color: #654321;", "-fx-text-fill: white;");
-		Button btnSubtract = createOperatorButton("-", "-fx-background-color: #654321;", "-fx-text-fill: white;");
-		Button btnMultiply = createOperatorButton("X", "-fx-background-color: #654321;", "-fx-text-fill: white;");
-		Button btnDivide = createOperatorButton("/", "-fx-background-color: #654321;", "-fx-text-fill: white;");
-		Button btnEquals = createOperatorButton("=", "-fx-background-color: red;", "-fx-text-fill: white;");
-//        btnEquals.setOnAction(e -> calculateResult());
+		Button btnAdd = createOperatorButton("+");
+		Button btnSubtract = createOperatorButton("-");
+		Button btnMultiply = createOperatorButton("X");
+		Button btnDivide = createOperatorButton("/");
+		Button btnEquals = new Button("=");
+		btnEquals.getStyleClass().add("button-equal");
+//		btnEquals.setOnAction(e -> calculateResult());
 
 		Button btnClear = new Button("C");
+		btnClear.getStyleClass().add("button-operator");
 		btnClear.setOnAction(e -> clearDisplay());
 		Button btnOpenParenthesis = new Button("(");
+		btnOpenParenthesis.getStyleClass().add("button-operator");
 		btnOpenParenthesis.setOnAction(e -> handleParenthesisClick('('));
 		Button btnCloseParenthesis = new Button(")");
+		btnCloseParenthesis.getStyleClass().add("button-operator");
 		btnCloseParenthesis.setOnAction(e -> handleParenthesisClick(')'));
 
 		// Create layout
 		GridPane grid = new GridPane();
+		grid.getStyleClass().add("grid-pane");
 		grid.setHgap(10);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 10, 10));
+//		grid.setPadding(new Insets(10, 10, 10, 10));
 
 		// Add components to the layout
 		grid.add(display, 0, 0, 5, 1);
@@ -80,7 +86,7 @@ public class CalculatorGUI extends Application {
 		grid.add(btnCloseParenthesis, 4, 3);
 		// Set up the scene
 		Scene scene = new Scene(grid, 300, 400);
-//		scene.getStylesheets().add(getClass().getResource("/UI/style.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 		primaryStage.setScene(scene);
 
 		// Show the stage
@@ -92,11 +98,9 @@ public class CalculatorGUI extends Application {
 		display.clear();
 	}
 
-	private Button createOperatorButton(String text, String backgroundStyle, String textFillStyle) {
+	private Button createOperatorButton(String text) {
 		Button button = new Button(text);
-//		button.getStyleClass().add("button-operator");
-//		button.setMinSize(10, 10); // Set a fixed size for the button
-//		button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Allow the button to grow
+		button.getStyleClass().add("button-operator");
 //		button.setPadding(new Insets(5));
 		button.setOnAction(e -> handleOperatorButtonClick(text));
 		return button;

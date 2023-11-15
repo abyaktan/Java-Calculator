@@ -1,0 +1,61 @@
+/* Style for number buttons */
+.button-number {
+    -fx-background-color: #d3d3d3; /* Light gray */
+    -fx-background-radius: 0; /* Remove rounded corners */
+    -fx-border-color: #808080; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: black; /* Text color */
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+}
+
+/* Style for operator buttons */
+.button-operator {
+    -fx-background-color: #654321; /* Dark brown */
+    -fx-background-radius: 0; /* Remove rounded corners */
+    -fx-border-color: #8B4513; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: white; /* Text color */
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+}
+
+/* Style for equal button */
+.button-equal {
+    -fx-background-color: #FF6347; /* Tomato */
+    -fx-background-radius: 0; /* Remove rounded corners */
+    -fx-border-color: #CD5C5C; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: white; /* Text color */
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+}
+
+/* Style for parenthesis buttons */
+.button-parenthesis {
+    -fx-background-color: #d3d3d3; /* Light gray */
+    -fx-text-fill: black; /* Text color */
+    -fx-font-weight: bold;
+}
+
+/* Style for display box */
+.display-box {
+    -fx-background-color: #f0f0f0; /* Lighter gray for background */
+    -fx-border-color: #c0c0c0; /* Border color */
+    -fx-border-width: 2; /* Border width */
+    -fx-padding: 5 10 5 5; /* Padding inside the box */
+}
+
+/* Style for the overall grid */
+.grid-pane {
+    -fx-padding: 10 10 10 5; /* Padding around the grid */
+}
+
+/* Style to remove the button focus border */
+.button:focused {
+    -fx-border-color: transparent;
+}

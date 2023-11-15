@@ -69,5 +69,12 @@
                 </executions>
             </plugin>
 		</plugins>
+		  <!-- Resources -->
+        <resources>
+            <resource>
+                <directory>resources</directory>
+                <targetPath>${project.build.outputDirectory}</targetPath>
+            </resource>
+        </resources>
 	</build>
 </project>
