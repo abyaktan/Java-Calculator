@@ -14,6 +14,10 @@ public class CalculatorGUI extends Application {
 	private String currentInput = "";
 	private String operator = "";
 	private double firstOperand = 0.0;
+	private int openParenthesisCount = 0;
+	private Button btnCloseParenthesis;
+	private Button btnPeriod;
+	private int periodCount = 0;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -28,8 +32,9 @@ public class CalculatorGUI extends Application {
 		display = new TextField();
 		display.setEditable(false);
 		display.getStyleClass().add("display-box");
-//		display.setMinHeight(50);
-		display.setPrefHeight(50);
+//		display.setPrefHeight(50);
+		display.setMinHeight(50);
+		display.setMinWidth(200);
 		display.setPrefWidth(Double.MAX_VALUE);
 
 		// Create number buttons
@@ -40,6 +45,10 @@ public class CalculatorGUI extends Application {
 			int finalI = i;
 			numberButtons[i].setOnAction(e -> handleNumberButtonClick(finalI));
 		}
+//		Create Period Button
+		btnPeriod = new Button(".");
+		btnPeriod.getStyleClass().add("button-number");
+		btnPeriod.setOnAction(e -> handleCommaClick('.'));
 
 		// Create operator buttons
 		Button btnAdd = createOperatorButton("+");
@@ -49,15 +58,16 @@ public class CalculatorGUI extends Application {
 		Button btnEquals = new Button("=");
 		btnEquals.getStyleClass().add("button-equal");
 //		btnEquals.setOnAction(e -> calculateResult());
-
+		Button btnSqrt = createOperatorButton("^");
 		Button btnClear = new Button("C");
-		btnClear.getStyleClass().add("button-operator");
+		btnClear.getStyleClass().add("button-C");
 		btnClear.setOnAction(e -> clearDisplay());
 		Button btnOpenParenthesis = new Button("(");
 		btnOpenParenthesis.getStyleClass().add("button-operator");
 		btnOpenParenthesis.setOnAction(e -> handleParenthesisClick('('));
-		Button btnCloseParenthesis = new Button(")");
+		btnCloseParenthesis = new Button(")");
 		btnCloseParenthesis.getStyleClass().add("button-operator");
+		btnCloseParenthesis.setDisable(true);
 		btnCloseParenthesis.setOnAction(e -> handleParenthesisClick(')'));
 
 		// Create layout
@@ -65,27 +75,38 @@ public class CalculatorGUI extends Application {
 		grid.getStyleClass().add("grid-pane");
 		grid.setHgap(10);
 		grid.setVgap(10);
-//		grid.setPadding(new Insets(10, 10, 10, 10));
 
 		// Add components to the layout
-		grid.add(display, 0, 0, 5, 1);
+		grid.add(btnClear, 0, 1);
+		grid.add(btnOpenParenthesis, 1, 1);
+		grid.add(btnCloseParenthesis, 2, 1);
+		grid.add(btnDivide, 3, 1);
 
-		for (int i = 1; i <= 9; i++) {
-			grid.add(numberButtons[i], (i - 1) % 3, 3 - (i - 1) / 3);
+		for (int i = 8; i <= 10; i++) {
+			grid.add(numberButtons[i - 1], i - 8, 2);
 		}
-		grid.add(numberButtons[0], 1, 4);
+		grid.add(btnMultiply, 3, 2);
 
-		grid.add(btnAdd, 4, 1);
-		grid.add(btnSubtract, 4, 2);
-		grid.add(btnMultiply, 3, 1);
-		grid.add(btnDivide, 3, 2);
-		grid.add(btnEquals, 4, 4);
+		for (int i = 5; i <= 7; i++) {
+			grid.add(numberButtons[i - 1], i - 5, 3);
+		}
+		grid.add(btnAdd, 3, 3);
 
-		grid.add(btnClear, 3, 4);
-		grid.add(btnOpenParenthesis, 3, 3);
-		grid.add(btnCloseParenthesis, 4, 3);
+		for (int i = 2; i <= 4; i++) {
+			grid.add(numberButtons[i - 1], i - 2, 4);
+		}
+		grid.add(btnSubtract, 3, 4);
+
+		// '0' button spanning 2 columns
+		grid.add(numberButtons[0], 0, 5, 2, 1);
+		grid.add(btnPeriod, 1, 5);
+		grid.add(btnSqrt, 2, 5);
+		grid.add(btnEquals, 3, 5);
+
+		grid.add(display, 0, 0, 4, 1); // display box for result
+
 		// Set up the scene
-		Scene scene = new Scene(grid, 300, 400);
+		Scene scene = new Scene(grid, 240, 370);
 		scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 		primaryStage.setScene(scene);
 
@@ -95,7 +116,9 @@ public class CalculatorGUI extends Application {
 
 	private void clearDisplay() {
 		currentInput = "";
+		openParenthesisCount = 0;
 		display.clear();
+		btnCloseParenthesis.setDisable(true);
 	}
 
 	private Button createOperatorButton(String text) {
@@ -106,9 +129,49 @@ public class CalculatorGUI extends Application {
 		return button;
 	}
 
+	private void handleCommaClick(char par) {
+		// Check if the current input is empty or starts with an operator
+		if (currentInput.isEmpty()) {
+			currentInput += "0.";
+		}
+		// Check if the current input ends with a number or an open parenthesis
+		else if (currentInput.matches(".*[0-9(]$")) {
+			currentInput += ".";
+		}
+		// Check if the current input starts with a number
+		else if (currentInput.matches("^\\s?\\d+.*")) {
+			// Check if the last number already contains a decimal point
+			String[] parts = currentInput.split("\\s?[+\\-*/()]\\s?");
+			if (!parts[parts.length - 1].contains(".")) {
+				currentInput += ".";
+			}
+		}
+
+		display.setText(currentInput);
+	}
+
 	private void handleParenthesisClick(char par) {
+		// Check if the current input ends with a decimal point
+		if (currentInput.endsWith(".")) {
+			// Do not allow parentheses to be added after a decimal point
+			return;
+		}
+//		Checks if there is a pair for open parenthesis, if there is none, the btnCloseParenthesis will be disabled
+		if (par == '(') {
+			openParenthesisCount++;
+		} else if (par == ')' && openParenthesisCount > 0) {
+			openParenthesisCount--;
+		} else {
+			// Invalid ")" without a matching "("
+			return;
+		}
+
 		currentInput += par;
 		display.setText(currentInput);
+
+		// Enable/disable ")" button based on open parenthesis count
+		btnCloseParenthesis.setDisable(openParenthesisCount == 0);
+
 	}
 
 	private void handleNumberButtonClick(int number) {
