@@ -1,0 +1,88 @@
+@font-face {
+	font-family: 'SF Text Regular';
+    src: url("SF-Text-Regular.ttf");
+}
+/* Style for number buttons */
+.button-number {
+	-fx-background-color: #505050; /* Light gray */
+    -fx-background-radius: 50%; 
+    -fx-border-color: #505050; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: #D4D4D2; /* Text color */
+    -fx-font-weight: bold;
+	-fx-font-size: larger;
+    -fx-font-family: 'SF UI Text Regular'; 
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+    -fx-border-radius: 50%;
+}
+
+/* Style for operator buttons */
+.button-operator {
+    -fx-background-color: #FF9500; /* Dark brown */
+    -fx-background-radius: 50%;
+    -fx-border-color: #FF9500; /* Border color */
+    -fx-font-family: 'SF UI Text Regular'; 
+    -fx-font-weight: bold;
+    -fx-font-size: large;
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: #D4D4D2; /* Text color */
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+    -fx-border-radius: 50%;
+}
+
+/* Style for equal button */
+.button-equal {
+    -fx-background-color: #FF6347; /* Tomato */
+    -fx-background-radius: 50%; 
+    -fx-border-color: #CD5C5C; /* Border color */
+    -fx-font-family: 'SF UI Text Regular'; 
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: white; /* Text color */
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+    -fx-border-radius: 50%;
+    -fx-font-weight: bold;
+    -fx-font-size: x-large;
+}
+
+/* Style for Clear buttons */
+.button-C {
+    -fx-background-color: #d3d3d3; /* Dark brown */
+    -fx-background-radius: 50%;
+    -fx-border-color: #d3d3d3; /* Border color */
+    -fx-font-family: 'SF UI Text Regular'; 
+    -fx-font-weight: bold;
+    -fx-font-size: large;
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: #505050; /* Text color */
+    -fx-alignment: CENTER; /* Center the text */
+    -fx-min-width: 50; /* Set minimum width */
+    -fx-min-height: 50; /* Set minimum height */
+    -fx-border-radius: 50%;
+}
+
+/* Style for display box */
+.display-box {
+	-fx-font-size: larger;
+	-fx-text-fill: white;
+    -fx-background-color: #1C1C1C; /* Lighter gray for background */
+    -fx-border-color:#1C1C1C; /* Border color */
+    -fx-border-width: 2; /* Border width */
+    -fx-padding: 5 10 5 5; /* Padding inside the box */
+}
+
+/* Style for the overall grid */
+.grid-pane {
+	-fx-background-color: #1C1C1C;
+    -fx-padding: 10 10 10 5; /* Padding around the grid */
+}
+
+/* Style to remove the button focus border */
+.button:focused {
+    -fx-border-color: transparent;
+}
